@@ -1,0 +1,171 @@
+* {
+   box-sizing: border-box;
+   margin: 0; padding: 0;
+}
+
+html {
+   font-size: 62.5%
+}
+
+body{
+   font-size: 1.4rem;
+   font-family: Arial, Verdana, sans-serif;
+   margin:auto;
+}
+
+header {
+   background-color: black;
+   padding: 1rem;
+   position: relative;
+   margin-bottom: 0.7rem;
+}
+
+header h1 {
+   font-size: 2.6rem;
+   font-weight: normal;
+   margin-bottom: 0.3rem;
+   color: white;
+}
+
+header h2 {
+   font-size: 1.4rem;
+   color: grey;
+   margin-left: 1.4rem;
+   margin-bottom: 0.5rem;
+}
+
+nav {
+   background-color: black;
+   position: absolute;
+   top: 1rem;
+   right: 1rem;
+}
+
+#topMenuButton{
+   float: right;
+   padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+   text-decoration: none;
+   color: white;
+   border: 0.1rem solid grey;
+   border-radius: 0.4rem;
+}
+ 
+a:hover#topMenuButton{
+   background-color: grey;
+}
+
+nav ul, nav:active ul {
+   display: none;
+}
+
+nav:hover ul {
+   display: inline-block;
+}
+
+nav ul li{
+   display: block;
+   list-style-type: none;
+   color: white;
+   padding: 1rem;
+}
+nav ul li a {
+   display: block;
+   color: white;
+   padding: 0.5rem;
+   text-decoration: none;
+}
+nav ul li a:hover {
+   background-color: grey;
+}
+
+
+section h2{
+   font-size: 2rem;
+   font-weight: normal;
+   margin-bottom: 0.5rem;
+
+}
+
+section p{
+   margin-bottom: 0.5rem;
+}
+
+img.right {
+   float:right;
+   margin-right: 2rem;
+   width: 230px;
+}
+
+section.green{
+   background-color: #5cb85c;
+   border: 0.1rem solid green;
+}
+section.red{
+   background-color: #d9534f;
+   border: 0.1rem solid red;
+}
+section.blue{
+   background-color: #428bca;
+   border: 0.1rem solid blue;
+}
+section.yellow{
+   background-color: #f6ec50;
+   border: 0.1rem solid olive;
+}
+
+section.silver{
+   background-color: silver;
+   border: 0.1rem solid grey;
+}
+section.orange{
+   background-color: #f0ad4e;
+   border: 0.1rem solid orange;
+}
+
+footer {
+   background-color: black;
+   padding: 1rem;
+   margin-top: 0.7rem;
+   color: white;
+   min-height: 5rem;
+}
+
+
+/** Tablets */
+@media (min-width: 768px) {
+      #topMenuButton {
+        display: none;
+      }
+
+      nav {
+       position: static;
+      }
+
+      nav ul, nav:active ul {
+         display:block;
+           padding-left: 1rem;
+      }
+   
+      nav ul li {
+         display: inline-block;
+         padding-left: 0;
+      }
+   
+      nav ul li a {
+         border: 0.1rem solid grey;
+      }
+   
+      nav ul li a:hover {
+        background-color: grey
+  }
+}
+
+/** desktop */
+@media (min-width: 980px){
+
+}
+
+/** Large desktop */
+@media (min-width: 1200px){
+
+}
