@@ -7,8 +7,6 @@
 </head>
 <body>
     <h1>Webbservern fungerar!</h1>
-    <?php
-        echo "<h1>This is index. Try Mx</h1>"
-    ?>    
+    <?php include("./footer.html");?>
 </body>
 </html>
