@@ -1,7 +1,12 @@
-<!doctype html>
-<html>
-<head lang="sv"></head>
-<body>
+<!DOCTYPE html>
+<head>
+    <html>
+        <head lang="sv"></head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </html>
+        <body>
 <h1>Matematik-test</h1>
 <form action="evaluate.php" method="post">
    <fieldset>

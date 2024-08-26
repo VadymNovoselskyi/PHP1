@@ -28,7 +28,9 @@
     else if($points >= 3) $result = "Godkänd";
     else $result = "Läs på mer och försök igen";
     
-
+    //test
+    #test
+    /*test */
     echo "<p>$result, poäng - $points</p>"
     ?>
 </body>
