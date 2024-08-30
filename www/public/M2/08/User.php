@@ -1,24 +1,13 @@
 <?php
-class Person {
-
-    private $name;
-    private $surname;
+class User
+{
     private $username;
     private $password;
 
-    public function __construct($name, $surname, $username, $password) {
-        $this->name = $name;
-        $this->surname = $surname;
+    public function __construct($username, $password)
+    {
         $this->username = $username;
         $this->password = $password;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function getSurname() {
-        return $this->surname;
     }
 
     public function getUsername() {
@@ -27,6 +16,10 @@ class Person {
 
     public function getPassword() {
         return $this->password;
+    }
+
+    public function saetUsername($username) {
+        $this->username = $username;
     }
 
     public function setPassword($password) {

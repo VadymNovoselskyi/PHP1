@@ -12,30 +12,23 @@
     if(isset($_POST["username"])) $username = $_POST["username"];
     if(isset($_POST["password"])) $password = $_POST["password"];
 
-    $name = strip_tags($name);
-    $name = htmlspecialchars($name);
-    $name = trim($name);
-    $name = stripslashes($name);
-
-    $surname = strip_tags($surname);
-    $surname = htmlspecialchars($surname);
-    $surname = trim($surname);
-    $surname = stripslashes($surname);
-
-    $username = strip_tags($username);
-    $username = htmlspecialchars($username);
-    $username = trim($username);
-    $username = stripslashes($username);
-
-    $password = strip_tags($password);
-    $password = htmlspecialchars($password);
-    $password = trim($password);
-    $password = stripslashes($password);
+    $name = cleanData($name);
+    $surname = cleanData($surname);
+    $username = cleanData($username);
+    $password = cleanData($password);
 
     echo "Name: " . $name . "<br>";
     echo "Surname: " . $surname . "<br>";
     echo "Username: " . $username . "<br>";
     echo "Password: " . $password . "<br>";
+
+    function cleanData($data) {
+        $data = strip_tags($data);
+        $data = htmlspecialchars($data);
+        $data = trim($data);
+        $data = stripslashes($data);
+        return $data;
+    }
     ?>
 </body>
 </html>
