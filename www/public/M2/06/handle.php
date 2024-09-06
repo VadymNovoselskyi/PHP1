@@ -7,6 +7,7 @@
 </head>
 <body>
     <?php
+    include("cleanData.php");
     if(isset($_POST["name"])) $name = $_POST["name"];
     if(isset($_POST["surname"])) $surname = $_POST["surname"];
     if(isset($_POST["username"])) $username = $_POST["username"];
@@ -21,14 +22,6 @@
     echo "Surname: " . $surname . "<br>";
     echo "Username: " . $username . "<br>";
     echo "Password: " . $password . "<br>";
-
-    function cleanData($data) {
-        $data = strip_tags($data);
-        $data = htmlspecialchars($data);
-        $data = trim($data);
-        $data = stripslashes($data);
-        return $data;
-    }
     ?>
 </body>
 </html>

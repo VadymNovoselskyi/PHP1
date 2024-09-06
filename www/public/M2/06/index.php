@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M2 02</title>
+    <title>M2 | 06</title>
 </head>
 <body>
   <form action="handle.php" method="post">

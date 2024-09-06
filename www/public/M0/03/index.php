@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Responsiv webbdesign</title>
+      <title>M0 | 03</title>
       <link rel="stylesheet" href="css/styleSheet.css?v=1.0">
       <link rel="stylesheet" href="css/gridCSS.css">
    </head>

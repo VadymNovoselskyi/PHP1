@@ -18,7 +18,7 @@ class User
         return $this->password;
     }
 
-    public function saetUsername($username) {
+    public function setUsername($username) {
         $this->username = $username;
     }
 

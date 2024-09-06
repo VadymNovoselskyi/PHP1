@@ -2,7 +2,7 @@
 <html>
 <head lang="sv"></head>
 <body>
-<h1>Matematik-test</h1>
+<h1>M1 | 03</h1>
 
 <form action="calculate.php" method="post">
    <fieldset>
