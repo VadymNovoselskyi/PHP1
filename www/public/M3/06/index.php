@@ -27,7 +27,12 @@ function login()
     header("Location: login.php");
     exit();
   }
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
   $_SESSION['logged_in'] = true;
+  $_SESSION['username'] = $username;
+  $_SESSION['password'] = $password;
 }
 function signup() {
   if (isset($_POST["username"]) && $_POST["username"] != "") $username = $_POST["username"];
@@ -40,11 +45,14 @@ function signup() {
     header("Location: login.php");
     exit();
   }
+
   $username = cleanData($username);
   $user = new User($username, $password);
   addUser($user);
   incUserCount();
   $_SESSION['logged_in'] = true;
+  $_SESSION['username'] = $username;
+  $_SESSION['password'] = $password;
 }
 
 function logout()

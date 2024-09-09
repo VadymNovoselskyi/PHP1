@@ -2,18 +2,14 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    else {
-      $_SESSION = array(); // Tömmer sessionsarrayen    
-      session_destroy();
-    }
-        $hit = 0;
-        if(file_exists("../../../M3-02-hit.dat")) {
-            $hit = file_get_contents("../../../M3-02-hit.dat");
-        }  
-        $hit++; // Ökar antalet besökare med 1
-        
-        file_put_contents("../../../M3-02-hit.dat", $hit);
-        echo $hit;
+    $hit = 0;
+    if(file_exists("../../../M3-02-hit.dat")) {
+        $hit = file_get_contents("../../../M3-02-hit.dat");
+    }  
+    $hit++; // Ökar antalet besökare med 1
+    
+    file_put_contents("../../../M3-02-hit.dat", $hit);
+    echo $hit;
 ?>
 <!doctype html>
 <html lang="sv">
