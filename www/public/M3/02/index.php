@@ -3,12 +3,12 @@
         session_start();
     }
     $hit = 0;
-    if(file_exists("../../../M3-02-hit.dat")) {
-        $hit = file_get_contents("../../../M3-02-hit.dat");
+    if(file_exists("../../../userCount/M3-02-hit.dat")) {
+        $hit = file_get_contents("../../../userCount/M3-02-hit.dat");
     }  
     $hit++; // Ökar antalet besökare med 1
     
-    file_put_contents("../../../M3-02-hit.dat", $hit);
+    file_put_contents("../../../userCount/M3-02-hit.dat", $hit);
     echo $hit;
 ?>
 <!doctype html>

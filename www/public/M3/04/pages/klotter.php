@@ -15,8 +15,8 @@ else {
 </form>
 
 <?php 
-    if(file_exists("../../../M3-04-messages.dat")) {
-        echo file_get_contents("../../../M3-04-messages.dat");
+    if(file_exists("../../../userData/M3-04-messages.dat")) {
+        echo file_get_contents("../../../userData/M3-04-messages.dat");
     }
 }
     ?>

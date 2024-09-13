@@ -13,7 +13,7 @@
 
     function addUser($user)
     {
-        $file = "../../../userData/M2-09-users.dat";
+        $file = "../../../userData/M4-03-users.dat";
 
         if(file_exists($file)) {
             $users = unserialize(file_get_contents($file));
@@ -30,14 +30,14 @@
 
     function isPresent($userToFind)
     {
-        $file = "../../../userData/M2-09-users.dat";
+        $file = "../../../userData/M4-03-users.dat";
         if (file_exists($file)) {
             $userArray = unserialize(file_get_contents($file));
         }
         else return false;
 
         foreach($userArray as $user) {
-            if($userToFind->getUsername() == $user->getUsername() && $userToFind->getPassword() == $user->getPassword()) return true;
+            if($userToFind->getUsername() == $user->getUsername() && password_verify($userToFind->getPassword(), $user->getPassword())) return true;
         }
         return false;
     }

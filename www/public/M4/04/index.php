@@ -1,5 +1,5 @@
 <?php
-include("userManipulation.php");
+include("../../../userData/M4-04-users.php");
 
 if (isset($_POST['login'])) login();
 else if (isset($_POST['signup'])) signup();
@@ -14,19 +14,23 @@ function login()
 {
   if (isset($_POST["username"])) $username = $_POST["username"];
   if (isset($_POST["password"])) $password = $_POST["password"];
-  $username = filter_input(INPUT_POST, $username, FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRIPPED);
+  $username = cleanData($username);
 
-  $user = new User($username, $password);
-
-  if (!isPresent($user)) {
+  $users = getUsers();
+  if (isset($users[$username]) && password_verify($password, $users[$username])) {
+    echo $username;
+  }
+  else {
     header("Location: login.php");
     exit();
   }
+
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
   }
   session_regenerate_id(true);
   $_SESSION['logged_in'] = true;
+  $_SESSION['CSRFToken'] = bin2hex(random_bytes(32));
 }
 function signup() {
   if (isset($_POST["username"]) && $_POST["username"] != "") $username = $_POST["username"];
@@ -40,12 +44,13 @@ function signup() {
     exit();
   }
   
-  $username = filter_input(INPUT_POST, $username, FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRIPPED);
+  $username = cleanData($username);
   $password = password_hash($password, PASSWORD_DEFAULT);
-
-  $user = new User($username, $password);
-  addUser($user);
+  echo "<p>Username: " . $username ."\n</p>";
+  echo "<p>Password: " . $password . "</p> <br><br>"; 
+  
   $_SESSION['logged_in'] = true;
+  $_SESSION['CSRFToken'] = bin2hex(random_bytes(32));
 }
 
 function logout()
@@ -55,16 +60,26 @@ function logout()
   }
   $_POST = array();
   $_SESSION = array(); // Tömmer sessionsarrayen    
+
   session_regenerate_id(true);
+  $_SESSION['CSRFToken'] = bin2hex(random_bytes(32));
 }
 
+function cleanData($data)
+{
+  $data = strip_tags($data);
+  $data = htmlspecialchars($data);
+  $data = trim($data);
+  $data = stripslashes($data);
+  return $data;
+}
 ?>
 <!doctype html>
 <html lang="sv">
 
 <head>
   <meta charset="UTF-8">
-  <title>M4 | 02</title>
+  <title>M4 | 04</title>
   <link href="css/styleSheet.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -74,6 +89,7 @@ function logout()
     <fieldset>
       <legend>Form</legend>
       <input type="hidden" name="message">
+      <input type = "hidden" name = "CSRFToken" value = <?php echo $_SESSION['CSRFToken']?>>
       <label>Your name: </label>
       <input type="text" name="name"> <br> <br>
       <label>Your message: </label>
@@ -91,6 +107,11 @@ function logout()
     }
 
     if(isset($_POST['message'])) {
+      if($_SESSION['CSRFToken'] === $_POST['CSRFToken']){
+        echo "ok csrft";
+    }else{
+        echo "Inte ok csrft";
+    }
       $safeName = filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
       $safeMassage = filter_input(INPUT_POST, 'text',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
       echo "<h3>Name - " . $safeName . "</h3>";

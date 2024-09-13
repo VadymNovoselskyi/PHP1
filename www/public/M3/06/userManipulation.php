@@ -13,7 +13,7 @@
 
     function addUser($user)
     {
-        $file = "../../../M3-06-users.dat";
+        $file = "../../../userData/M3-06-users.dat";
 
         if(file_exists($file)) {
             $users = unserialize(file_get_contents($file));
@@ -30,7 +30,7 @@
 
     function isPresent($userToFind)
     {
-        $file = "../../../M3-06-users.dat";
+        $file = "../../../userData/M3-06-users.dat";
         if (file_exists($file)) {
             $userArray = unserialize(file_get_contents($file));
         }

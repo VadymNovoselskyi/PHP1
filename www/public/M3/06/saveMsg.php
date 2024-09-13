@@ -5,7 +5,7 @@
   $name = "<hr><p>Från: " . $_SESSION['username'] . "</p>";
   $msg = "<p>" . cleanData($_POST['message']) . "</p>";
 
-  file_put_contents("../../../M3-06-messages.dat", $name . $msg, FILE_APPEND);
+  file_put_contents("../../../userData/M3-06-messages.dat", $name . $msg, FILE_APPEND);
 
   header("location: index.php?page=klotter"); //Omdirigerar till klotterplanket
 

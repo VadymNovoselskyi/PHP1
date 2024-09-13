@@ -9,8 +9,8 @@ else {
   #header("Location: login.php");
 }
 
-if (file_exists("../../../M3-04-hit.dat")) {
-  $hit = file_get_contents("../../../M3-04-hit.dat");
+if (file_exists("../../../userCount/M3-04-hit.dat")) {
+  $hit = file_get_contents("../../../userCount/M3-04-hit.dat");
 }
 echo $hit;
 
@@ -21,12 +21,12 @@ function login()
     $_SESSION['logged_in'] = true;
 
     $hit = 0;
-    if (file_exists("../../../M3-04-hit.dat")) {
-      $hit = file_get_contents("../../../M3-04-hit.dat");
+    if (file_exists("../../../userCount/M3-04-hit.dat")) {
+      $hit = file_get_contents("../../../userCount/M3-04-hit.dat");
     }
     $hit++; // Ökar antalet besökare med 1
 
-    file_put_contents("../../../M3-04-hit.dat", $hit);
+    file_put_contents("../../../userCount/M3-04-hit.dat", $hit);
   }
 }
 function logout()
