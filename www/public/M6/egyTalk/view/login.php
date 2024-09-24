@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M6 | 04</title>
+    <title>M6 | EgyTalk</title>
 </head>
 <body>
     <form method="post" action="userManipulation.php">

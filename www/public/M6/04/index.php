@@ -10,9 +10,15 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) echo "<h1>Good</h1>";
+    if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+        echo "<h1>Good</h1>";
+        echo $_SESSION['username']; 
+        echo "<br>";
+        echo $_SESSION['name']; 
+    }
     else echo "<h1> No good </h1>";
     ?>
+    <br> <br>
     <a href="login.php">Log In</a>
 </body>
 </html>

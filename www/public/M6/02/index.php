@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M6 | 01</title>
+    <title>M6 | 02</title>
 </head>
 <body>
     <form method="post">
@@ -14,7 +14,7 @@
     </form>
 
     <?php
-        include_once('../inc/egytalk_connect.php');    
+        include_once('../inc/world_connect.php');    
 
         if(isset($_POST['city']) && $_POST['city'] != '') $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_SPECIAL_CHARS);
         else $city = 'Malmö';
