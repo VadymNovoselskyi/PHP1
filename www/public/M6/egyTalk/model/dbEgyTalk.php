@@ -23,12 +23,36 @@ class dbEgyTalk
    *
    * @param $username Användarnamn
    * @param $password Lösenord
-   * @return $response användardata eller tom []
+   * @return $result användardata eller tom []
    */
   function auth($username, $password)
   {
     $username = trim(filter_var($username, FILTER_UNSAFE_RAW));
-    $response = [];
+    $result = [];
+
+    $stmt = $this->db->prepare("SELECT * FROM user WHERE username = :user");
+    $stmt->bindValue(":user", $username);
+    $stmt->execute();
+
+    /** Kontroll att resultat finns */
+    if ($stmt->rowCount() == 1) {
+      $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if ($password == $user['password']) {
+        $result['uid'] = $user['uid'];
+        $result['username'] = $user['username'];
+        $result['firstname'] = $user['firstname'];
+        $result['surname'] = $user['surname'];
+        $result['password'] = $user['password'];  
+      }
+    }
+    return $result;
+  }
+
+  function login($username, $password)
+  {
+    $username = trim(filter_var($username, FILTER_UNSAFE_RAW));
+    $result = [];
 
     $stmt = $this->db->prepare("SELECT * FROM user WHERE username = :user");
     $stmt->bindValue(":user", $username);
@@ -39,13 +63,56 @@ class dbEgyTalk
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
       if (password_verify($password, $user['password'])) {
-        $response['uid'] = $user['uid'];
-        $response['username'] = $user['username'];
-        $response['firstname'] = $user['firstname'];
-        $response['surname'] = $user['surname'];
+        $result['uid'] = $user['uid'];
+        $result['username'] = $user['username'];
+        $result['firstname'] = $user['firstname'];
+        $result['surname'] = $user['surname'];
+        $result['password'] = $user['password'];  
       }
     }
-    return $response;
+    return $result;
+  }
+
+  function signup($firstname, $surname, $username, $password) 
+  {
+    $uid = random_bytes(16);
+    $uid[6] = chr((ord($uid[6]) & 0x0f) | 0x40);
+    $uid[8] = chr((ord($uid[8]) & 0x3f) | 0x80);
+    $uid = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($uid), 4));
+
+    $firstname = trim(filter_var($firstname, FILTER_SANITIZE_SPECIAL_CHARS));
+    $surname = trim(filter_var($surname, FILTER_SANITIZE_SPECIAL_CHARS));
+    $username = trim(filter_var($username, FILTER_UNSAFE_RAW));
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $stmt = $this->db->prepare("INSERT INTO user(uid, firstname, surname, username, password) VALUES(:uid, :fn, :sn,:user,:pwd)");
+
+    $stmt->bindValue(":uid", $uid);
+    $stmt->bindValue(":fn", $firstname);
+    $stmt->bindValue(":sn", $surname);
+    $stmt->bindValue(":user", $username);
+    $stmt->bindValue(":pwd", $password);
+
+    $stmt->execute();
+
+    $result = [];
+    $result['uid'] = $uid;
+    $result['username'] = $username;
+    $result['firstname'] = $firstname;
+    $result['surname'] = $surname;
+    $result['password'] = $password;
+
+    return $result;
+  }
+
+
+  function post($uid, $post_txt) {
+    $stmt = $this->db->prepare("INSERT INTO post (uid, post_txt, date) VALUES (:uid, :post, NOW())");
+
+    $stmt->bindValue(":uid", $uid);
+    $stmt->bindValue(":post", $post_txt);
+
+    $stmt->execute();
   }
 
   /**
@@ -62,7 +129,7 @@ class dbEgyTalk
 
   function getUserPosts($uid)
   {
-    $stmt = $this->db->prepare("SELECT post_txt, date FROM post WHERE uid = :uid ORDER By date DESC");
+    $stmt = $this->db->prepare("SELECT post_txt, date, pid FROM post WHERE uid = :uid ORDER By date DESC");
 
     $stmt->bindValue(":uid", $uid);
 
@@ -98,5 +165,4 @@ class dbEgyTalk
 
     $stmt->execute();
   }
-  
 }
