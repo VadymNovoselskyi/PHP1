@@ -11,7 +11,7 @@ class dbEgyTalk
     // Definierar konstanter med användarinformation.
     define('DB_USER', 'egytalk');
     define('DB_PASSWORD', '12345');
-    define('DB_HOST', 'mariadb');
+    define('DB_HOST', 'localhost');
     define('DB_NAME', 'egytalk');
 
     $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
