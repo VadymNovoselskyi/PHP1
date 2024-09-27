@@ -14,7 +14,7 @@ function login()
     $username = filter_input(INPUT_POST, 'username', FILTER_UNSAFE_RAW);
     $password = $_POST['password'];
 
-    $result = $db->login($username, $password);
+    $result = $db->auth($username, $password, true);
 
     if ($result == [])  {
         header("Location: ../login.html");

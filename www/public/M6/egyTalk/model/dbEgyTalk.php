@@ -25,7 +25,7 @@ class dbEgyTalk
    * @param $password Lösenord
    * @return $result användardata eller tom []
    */
-  function auth($username, $password)
+  function auth($username, $password, $toHash)
   {
     $username = trim(filter_var($username, FILTER_UNSAFE_RAW));
     $result = [];
@@ -38,37 +38,34 @@ class dbEgyTalk
     if ($stmt->rowCount() == 1) {
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      if ($password == $user['password']) {
-        $result['uid'] = $user['uid'];
-        $result['username'] = $user['username'];
-        $result['firstname'] = $user['firstname'];
-        $result['surname'] = $user['surname'];
-        $result['password'] = $user['password'];  
-      }
+      if(!$toHash && $password != $user['password']) return $result;
+      if($toHash && !password_verify($password, $user['password'])) return $result;
+
+      $result['uid'] = $user['uid'];
+      $result['username'] = $user['username'];
+      $result['firstname'] = $user['firstname'];
+      $result['surname'] = $user['surname'];
+      $result['password'] = $user['password'];  
     }
     return $result;
   }
 
-  function login($username, $password)
+  function getUserByUID($uid) 
   {
-    $username = trim(filter_var($username, FILTER_UNSAFE_RAW));
     $result = [];
 
-    $stmt = $this->db->prepare("SELECT * FROM user WHERE username = :user");
-    $stmt->bindValue(":user", $username);
+    $stmt = $this->db->prepare("SELECT uid, firstname, surname, username FROM user WHERE uid = :uid");
+    $stmt->bindValue(":uid", $uid);
     $stmt->execute();
 
     /** Kontroll att resultat finns */
     if ($stmt->rowCount() == 1) {
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      if (password_verify($password, $user['password'])) {
-        $result['uid'] = $user['uid'];
-        $result['username'] = $user['username'];
-        $result['firstname'] = $user['firstname'];
-        $result['surname'] = $user['surname'];
-        $result['password'] = $user['password'];  
-      }
+      $result['uid'] = $user['uid'];
+      $result['username'] = $user['username'];
+      $result['firstname'] = $user['firstname'];
+      $result['surname'] = $user['surname'];
     }
     return $result;
   }
@@ -115,6 +112,17 @@ class dbEgyTalk
     $stmt->execute();
   }
 
+  function postComment($pid, $uid, $comment)
+  {
+    $stmt = $this->db->prepare("INSERT INTO comment (pid, uid, comment_txt, date) VALUES (:pid, :uid, :comment, NOW())");
+
+    $stmt->bindValue(":pid", $pid);
+    $stmt->bindValue(":uid", $uid);
+    $stmt->bindValue(":comment", $comment);
+
+    $stmt->execute();
+  }
+
   /**
    * Hämtar alla status-uppdateringar i tabellen post
    *
@@ -148,21 +156,10 @@ class dbEgyTalk
 
   function getComments($pid)
   {
-    $stmt = $this->db->prepare("SELECT user.username, comment.comment_txt, comment.date FROM user JOIN comment ON user.uid = comment.uid WHERE pid = :pid");
+    $stmt = $this->db->prepare("SELECT comment.cid, comment.uid, user.username, comment.comment_txt, comment.date FROM user JOIN comment ON user.uid = comment.uid WHERE pid = :pid");
     $stmt->bindValue(":pid", $pid);
 
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-  }
-
-  function postComment($pid, $uid, $comment)
-  {
-    $stmt = $this->db->prepare("INSERT INTO comment (pid, uid, comment_txt, date) VALUES (:pid, :uid, :comment, NOW())");
-
-    $stmt->bindValue(":pid", $pid);
-    $stmt->bindValue(":uid", $uid);
-    $stmt->bindValue(":comment", $comment);
-
-    $stmt->execute();
   }
 }

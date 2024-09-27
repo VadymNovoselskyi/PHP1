@@ -18,12 +18,23 @@
         echo "<h3>Your name " . $_SESSION['name'] . "</h3>";
         ?>
 
-<form method="post" action="api/auth.php">
+<form method="POST" action="api/auth.php">
     <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
     <input type="hidden" name="password" value="<?php echo $_SESSION['password']; ?>">
     <input type="submit" value="auth.php">
 </form>
+
 <a href="api/getPosts.php">getPosts.php</a>
+
+<form method="GET" action="api/getUserByUID.php">
+    <input type="text" name="uid">
+    <input type="submit" value="getUserByUID.php">
+</form>
+
+<form method="GET" action="api/getPostsByUID.php">
+    <input type="text" name="uid">
+    <input type="submit" value="getPostsByUID.php">
+</form>
 
 <ul>
     <li><a href="index.php">Home</a></li>

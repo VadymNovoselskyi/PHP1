@@ -12,7 +12,7 @@ $response['userdata'] = null;
     //$user = $db->getUserFromUid($_SESSION['uid']);
 //} 
 if (isset($_POST['username'], $_POST['password'])) {
-    $user = $db->auth($_POST['username'], $_POST['password']);
+    $user = $db->auth($_POST['username'], $_POST['password'], false);
 }
 
 if (isset($user) && !empty($user)) {
@@ -23,7 +23,6 @@ if (isset($user) && !empty($user)) {
 }
 
 if(!$response['auth']) header('HTTP/1.0 401 Unauthorized');
-
 header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json');
 
