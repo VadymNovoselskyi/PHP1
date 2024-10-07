@@ -7,7 +7,7 @@
 </head>
 <body>
 <?php
-    include_once('../inc/egytalk_connect.php');    
+    include_once('../inc/world_connect.php');    
 
     /* Kör frågan mot databasen world och tabellen country */
     $stmt = $db->prepare("SELECT Name, Population FROM country WHERE Name LIKE 'Z%' ORDER BY Population DESC");    

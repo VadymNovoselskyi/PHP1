@@ -10,5 +10,3 @@ nginx/*
 php/*
 !php/php.ini
 
-db/mysql
-db/performance_schema

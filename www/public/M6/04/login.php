@@ -32,31 +32,5 @@
         <input type="hidden" name="logout">
         <input type="submit" value="Log Out"> <br><br>
     </form>
-
-    <?php
-        if(isset($_POST['firstName'],$_POST['surName'],$_POST['username'],$_POST['password'])){                
-            include_once('../inc/egytalk_connect.php');    
-            
-            $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_SPECIAL_CHARS);
-            $surName = filter_input(INPUT_POST, 'surName', FILTER_SANITIZE_SPECIAL_CHARS);
-            $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            
-
-            $stmt= $db->prepare("INSERT INTO user(uid, firstname, surname, username, password) VALUES(UUID(), :fn, :sn,:user,:pwd)");
-            
-            $stmt->bindValue(":fn", $firstName);
-            $stmt->bindValue(":sn", $surName);
-            $stmt->bindValue(":user", $username);
-            $stmt->bindValue(":pwd", $password);
-            
-            try{
-                $stmt->execute();
-                echo "Good";
-            }catch(Exception $e){
-                echo "Not good";
-            }
-        }
-    ?>
 </body>
 </html>

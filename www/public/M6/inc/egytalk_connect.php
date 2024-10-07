@@ -6,7 +6,7 @@
         define('DB_PASSWORD', '12345');
     }
     if (!defined('DB_HOST')) {
-        define('DB_HOST', 'localhost'); // Use 'mariadb' for Docker, otherwise '127.0.0.1'
+        define('DB_HOST', 'mariadb'); // Use 'mariadb' for Docker, otherwise '127.0.0.1'
     }
     if (!defined('DB_NAME')) {
         define('DB_NAME', 'egytalk');
